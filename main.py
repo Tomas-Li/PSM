@@ -1,12 +1,16 @@
 """
-This is a Free PassWordManager based in the use of a local Encrypted Database in your computer (wich I recomend you keep a safe copy in the cloud) that will be only accesible by an Encryption Password that you must define for every user you want to register.
+This is a Free PasswordManager based in the use of a local Encrypted Database in your computer that will be only accesible by an Encryption Password that you must define for every user you want to register.
 The first time, you only need to run the program and it will ask you to make a user, set a encryption password and finally to upload your urls <-> psw manually or by a .txt file. Second boot onwards it will ask for the user that you are login into and his encryption password, or to make a new user (last case the steps would be the same as in the first boot).
 
-*You can look for the users' DBs in the following paths depending of your S.O:
+*You can modify the default main directory of the application from the ConfigFile.ini (this is where you have to look for the users' DBs). The defualt paths are S.O:
     Windows -> C:\PSM
     Linux -> ~/.PSM
 
-*
+*The encryption used for the DB is based in the salt (wich you can modify from the ConfigFile.ini) and in the password defined during the user creation.
+
+*Keep a copy of your salt and password in somewhere safe (besides your brain) as if you forget them there is no way to recover neither of them.
+
+*Ideally you want to keep the main directory sincronized with a cloud service. The password inside the DB are protected by the encryptation so even if someone could get inside your cloud they won't be able to get your passwords, and if you have a copy in the cloud if something where to happen to your physical drive you wont loose your passwords, just download your user's DB and you are ready to go.
 """
 
 """ TODO and Notes
@@ -16,7 +20,6 @@ The first time, you only need to run the program and it will ask you to make a u
 
 *)Edicion con Kivy/Tkinter?
 """
-
 
 
 import os
@@ -32,22 +35,16 @@ from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC #Keydefinition function -> derives a cryptographic key from the password
 
 
-class WinUser():
+class PSMClass():
 
-    if platform.system() == 'Windows':
-        __BASE_PATH = r"C:\PSM"
-    elif platform.system() == 'Linux':
-        __BASE_PATH = r"~/.PSM"
-    else:
-        raise Exception("The O.S. isn't supported")
+    __BASE_PATH = None
+    __config = None
     user = None
     fernet = None
 
 
     def fernet_generator(self, psw:str) -> None:
-        config = ConfigParser()
-        config.read('ConfigFile.ini')
-        salt = config['key']['salt']
+        salt = self.__config['key']['salt']
         psw = psw.encode()  #localmente debe ser bytes
         salt = salt.encode() #localmente debe ser bytes
         kdf = PBKDF2HMAC(
@@ -410,6 +407,16 @@ class WinUser():
     def startup(self):
         """Function in charge of selecting the user and password for the session"""
         
+        self.__config = ConfigParser()
+        self.__config.read('ConfigFile.ini')
+        if platform.system() == 'Windows':
+            self.__BASE_PATH = self.__config['options']['main_directory_windows']
+        elif platform.system() == 'Linux':
+            self.__BASE_PATH = self.__config['options']['main_directory_linux']
+        else:
+            raise Exception("The O.S. isn't supported")
+
+
         #Checking folder existence
         if not os.path.exists(self.__BASE_PATH):
             os.makedirs(self.__BASE_PATH)
@@ -474,7 +481,7 @@ class WinUser():
 
 
 if __name__ == '__main__':
-    inst = WinUser()
+    inst = PSMClass()
     inst.startup()
     inst.main_menu()
 
