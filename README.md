@@ -4,7 +4,7 @@ The first time that you use the software, you only need to run it and it will as
 Installation:
 1. Have python installed
 2. Clone the repository (or just download the ConfigFile.ini and main.py)
-3. Use pip to install cryptography or open a console in the clone folder and run: pip install . (it will install the dependencies listed in the requeriments.txt -> cryptography is the only one)
+3. Use pip to install cryptography or open a console in the clone folder and run: pip install -r requirements.txt (it will install the dependencies listed in the requeriments.txt -> cryptography is the only one)
 4. You are ready to try PSM 
 
 
