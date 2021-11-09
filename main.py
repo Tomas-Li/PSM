@@ -363,6 +363,9 @@ class PSMClass():
     def reader_txt(self):
         """This is a function that will read the data inside .txt file. The estructure inside of it should be a line per entry, and every entry would be in the form: <url>,<account>,<password>"""
 
+        print("The estructure inside of the .txt should be a line per entry, and every entry would be in the form of: <url>,<account>,<password>")
+        print("If your url, account or passwrod has one or more ',' you should imput that entry from the program itself and no by this method!!!")
+        
         print("Input the path to the .txt file")
         path = input('\tPath: ')
 
