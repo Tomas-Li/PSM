@@ -252,7 +252,7 @@ class PSMClass():
         try:
             self.decrypt_db()
 
-            print("In the next three steps introduce the url that you want to save ,then its account and finally its password:")
+            print("In the next three steps introduce the url that you want to save, then its account and finally its password:")
             url = input('\turl: ')
             account = input('\taccount: ')
             password = input('\tpassword: ')
