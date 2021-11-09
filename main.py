@@ -414,7 +414,7 @@ class PSMClass():
         conn.close()
 
         print(
-            f"Now please introduce the password for {self.user}, I recomend you to write down this password, and keep it safe, as there is no way to recover it (the program never knows your password so there is nothing to do if you loose it):")
+            f"Now please introduce the password for {self.user}. I recomend you to write down this password, and keep it safe, as there is no way to recover it (the program never knows your password so there is nothing to do if you loose it). The same can be said about the salt value if you have used a custom value in the ConfigFile.ini:")
         psw = input("\tPassword: ")
 
         self.fernet_generator(psw)
