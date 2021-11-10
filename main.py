@@ -22,8 +22,6 @@ The first time, you only need to run the program and it will ask you to make a u
 """
 
 
-
-
 import os
 import platform
 import base64
@@ -347,12 +345,12 @@ class PSMClass():
             lst = c.fetchall()
             conn.close()
 
-            with open(f'{self.__BASE_PATH}{os.sep}{self.user}.txt', 'w') as file:
+            with open(f'{self.__BASE_PATH}{os.sep}{self.user}.txt', 'w', encoding='utf-8-sig') as file:
                 for entry in lst:
-                    file.write(','.join(entry))
+                    file.write(' , '.join(entry))
                     file.write('\n')
 
-            print('*File creation successful*')
+            print(f'*File creation at {self.__BASE_PATH} successful*')
 
         finally:
             self.encrypt_db()
@@ -364,7 +362,7 @@ class PSMClass():
         """This is a function that will read the data inside .txt file. The estructure inside of it should be a line per entry, and every entry would be in the form: <url>,<account>,<password>"""
 
         print("The estructure inside of the .txt should be a line per entry, and every entry would be in the form of: <url>,<account>,<password>")
-        print("If your url, account or passwrod has one or more ',' you should imput that entry from the program itself and no by this method!!!")
+        print("If your url, account or password has one or more ',' or white spaces you should input that entry from the program itself and no by this method!!!")
         
         print("Input the path to the .txt file")
         path = input('\tPath: ')
@@ -377,9 +375,10 @@ class PSMClass():
             c = conn.cursor()
 
             try:
-                with open(path, 'r') as file:
+                with open(path, 'r', encoding='utf-8-sig') as file:
                     for line in file:
                         data = line.strip().split(',')
+                        for i in range(len(data)): data[i] = data[i].strip()
                         c.execute(f"INSERT INTO {self.user} VALUES(:url,:account,:password)", {
                                   'url': data[0], 'account': data[1], 'password': data[2]})
             except FileNotFoundError as err:
