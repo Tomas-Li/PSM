@@ -1,5 +1,5 @@
 This is a Free PasswordManager based in the use of a local Encrypted Database in your computer that will be only accesible by an Encryption Password that you must define for every user you want to register.
-The first time that you use the software, you only need to run it and it will ask you to make a user and set a encryption password, then you can upload your passwords manually or by a .txt file. Second boot onwards it will ask for the user that you are login into and his encryption password, or to make a new user (last case the steps would be the same as in the first boot).
+The first time that you use the software, you only need to run it and it will ask you to make a user and set an encryption password, then you can upload your passwords manually or by a .txt file. Second boot onwards it will ask for the user that you are login into and his encryption password, or to make a new user (last case the steps would be the same as in the first boot).
 
 ## Installation:
 1. Have python installed
